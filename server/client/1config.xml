@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<clients>
+	<client key="x" mail="s@sd.com">
+		<alert type="memory" under="2"/>
+		<alert type="cpu" equal="3"/>
+		<alert type="process" over="34"/>
+	</client>
+	<client key="y" mail="y@sd.com">
+		<alert type="memory" under="11"/>
+		<alert type="cpu" equal="22"/>
+		<alert type="process" over="33"/>
+	</client>
+	<client key="z" mail="z@sd.com">
+		<alert type="memory" over="44"/>
+		<alert type="cpu" under="66"/>
+		<alert type="process" equal="23"/>
+	</client>
+
+</clients>
+

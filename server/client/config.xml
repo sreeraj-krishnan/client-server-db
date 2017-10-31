@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<clients>
+	<client key="x" mail="s@sd.com">
+		<alert>
+			<type>memory</type>
+			<under>50</under>
+		</alert>
+		<alert>
+			<type>cpu</type>
+			<over>20</over>
+		</alert>
+		<alert>
+			<type>process</type>
+			<equal>30</under>
+		</alert>
+	</client>
+	<client key="y" mail="y@sd.com">
+		<alert>
+			<type>memory</type>
+			<equal>10</equal>
+		</alert>
+		<alert>
+			<type>cpu</type>
+			<over>22</over>
+		</alert>
+		<alert>
+			<type>process</type>
+			<under>10</under>
+		</alert>
+	</client>
+	<client key="z" mail="z@sd.com">
+		<alert>
+			<type>memory</type>
+			<under>30</under>
+		</alert>
+		<alert>
+			<type>cpu</type>
+			<equal>22</equal>
+		</alert>
+		<alert>
+			<type>process</type>
+			<over>38</over>
+		</alert>
+	</client>
+
+</clients>
+

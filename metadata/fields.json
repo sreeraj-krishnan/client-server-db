@@ -1,0 +1,57 @@
+{
+	"memory":{
+		"type" : "object",
+		"fields" : [
+			"memory_total" : {
+				
+				"type": "integer",
+				"unit" : "KB",
+				"min" : 0,
+				"max" : -1 
+				
+			},
+			"memory_used": {
+				"type" : "integer",
+				"unit" : "KB",
+				"min" : 0,
+				"max" : -1 
+				
+			},
+			"memory_free": {
+				"type" : "integer",
+				"unit" : "KB",
+				"min" : 0,
+				"max" : -1 
+			}
+		]
+	},
+
+	"cpu" : {
+		"type": "object",
+		"fields" : [
+		
+			"idle" : {
+				"type" : "float",
+				"unit" : "percentage",
+				"min" : 0,
+				"max" : 100
+			},
+			"used" : {
+				"type" : "float",
+				"unit" : "percentage",
+				"min" : 0,
+				"max" : 100
+			
+			}
+		
+		]
+			
+	},
+	"processes" : {
+		"type" : "integer",
+		"unit" : "0",
+		"min" : 0
+		
+	}
+
+}
