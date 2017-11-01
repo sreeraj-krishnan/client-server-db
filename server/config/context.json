@@ -1,0 +1,12 @@
+{
+	"server_ip" : "192.168.1.3",
+	"server_port" : "9090",
+	"mail_server" : "localhost",
+	"mail_server_port" : "25",
+	"mail_username" : "m1@example.com",
+	"mail_passwd" : "miner1",
+	"db_username" : "postgres",
+	"db_passwd"  : "postgres",
+	"db_name" : "mydb"	
+	
+}

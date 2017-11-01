@@ -1,4 +1,5 @@
 #include "persistence.h"
+#include "context.h"
 
 #include "machine.pb.h"
 #include "machine_info.hxx"
@@ -41,7 +42,8 @@ void Persistence::write_client_info_db( const MachineInfoPtr& client_info )
 {
 	try 
 	{
-    		std::unique_ptr<database> db (new odb::pgsql::database ("postgres","postgres","mydb"));
+		Config& config = Context::get_config();
+    		std::unique_ptr<database> db (new odb::pgsql::database ( config["db_username"],config["db_passwd"],config["db_name"]));
    		{
 			transaction t (db->begin ());
 			//t.tracer (stderr_tracer);

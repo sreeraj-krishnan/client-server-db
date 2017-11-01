@@ -1,6 +1,7 @@
 #include "client.h"
 #include "smtpclient.h"
 #include "machine_info.hxx"
+#include "context.h"
 
 #include <istream>
 #include <iostream>
@@ -48,8 +49,9 @@ void Client::alert_for_memory( const TriggerEvent& _event, const MachineInfoPtr&
 	
 	if( ! body.empty() )	
 	{
-		SMTPClient mailc("localhost",25,"m1@example.com","miner1");
-		bool ret = mailc.Send("m1@example.com",m_email, subject , body );
+		Config& config = Context::get_config();
+		SMTPClient mailc( config["mail_server"], stol(config["mail_server_port"]),config["mail_username"],config["mail_passwd"]);
+		bool ret = mailc.Send(config["mail_username"],m_email, subject , body );
 		if ( ret )
 		{
 			cout << "failed to memory send notification " << "\n";
@@ -84,8 +86,9 @@ void Client::alert_for_cpu( const TriggerEvent& _event, const MachineInfoPtr& ma
 	
 	if( ! body.empty() )	
 	{
-		SMTPClient mailc("localhost",25,"m1@example.com","miner1");
-		bool ret = mailc.Send("m1@example.com",m_email, subject , body );
+		Config& config = Context::get_config();
+		SMTPClient mailc( config["mail_server"], stol( config["mail_server_port"]),config["mail_username"],config["mail_passwd"]);
+		bool ret = mailc.Send(config["mail_username"],m_email, subject , body );
 		if ( ret )
 		{
 			cout << "failed to send cpu notification " << "\n";
@@ -121,8 +124,9 @@ void Client::alert_for_process( const TriggerEvent& _event, const MachineInfoPtr
 	
 	if( ! body.empty() )	
 	{
-		SMTPClient mailc("localhost",25,"m1@example.com","miner1");
-		bool ret = mailc.Send("m1@example.com",m_email, subject , body );
+		Config& config = Context::get_config();
+		SMTPClient mailc( config["mail_server"], stol(config["mail_server_port"]) ,config["mail_username"],config["mail_passwd"]);
+		bool ret = mailc.Send(config["mail_username"],m_email, subject , body );
 		if ( ret )
 		{
 			cout << "failed to send process notification " << "\n";
@@ -134,7 +138,6 @@ void Client::alert_for_process( const TriggerEvent& _event, const MachineInfoPtr
 
 void Client::notify(const MachineInfoPtr& machine_info )
 {
-	cout << "Client : " << m_key << "\n";
 	for ( auto& it : this->notify_events )
 	{
 		const EventType& eve = it.first;
@@ -150,8 +153,6 @@ void Client::notify(const MachineInfoPtr& machine_info )
 		{
 			alert_for_process( it , machine_info );
 		}
-		
-		//cout << "Alert for " << get_alert_string( eve.first ) << " " << get_condition_string(eve.second) << " " << it.second << " registered \n";
 	}
 }
 
@@ -208,7 +209,6 @@ string Client::get_alert_string( const Alert& alert )
 
 Alert Client::get_alert_type( const string& input )
 {
-	//cout << "\n in get_alert_type : " << input << "\n";
 	if( input == string("memory"))
 	{
 		return Alert::memory;
@@ -229,7 +229,6 @@ Alert Client::get_alert_type( const string& input )
 
 Condition Client::get_condition( const string& input )
 {
-	//cout << "\n in get_condition : " << input << "\n" ;
 	if( input == string("equal"))
 	{
 		return Condition::equal ;
@@ -250,7 +249,6 @@ Condition Client::get_condition( const string& input )
 
 void Client::push_events(const TriggerEvent _event )
 {
-	//cout << "push event : " <<(int) _event.first << " : " << (int) _event.second << "\n";
 	notify_events.push_back( _event );	
 }
 

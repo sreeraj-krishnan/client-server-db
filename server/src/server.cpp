@@ -2,6 +2,7 @@
 #include "server_http.hpp"
 #include "status_code.hpp"
 #include "machine.pb.h"
+#include "context.h"
 
 #include "persistence.h"
 #include "client.h"
@@ -24,19 +25,14 @@ using HttpClient = SimpleWeb::Client<SimpleWeb::HTTP>;
 
 int main(int argc, char** argv) {
   
-  if( argc < 3 )
-  {
-	cout << "Usage : ./server <server-config> <path to client-config xml file>\n";
-	exit(1);
-  }
+  Context context("config/context.json"); // initialize context
+  alert::Client::add_clients("config/client-list.xml"); // path to xml file
 
-  ServerConfig sconfig(argv[1]);
 
   HttpServer server;
-  server.config.port = stoi( sconfig.get_port());
-  server.config.address = sconfig.get_ip();
+  server.config.port =  stoi (Context::get_config()["server_port"] ); 
+  server.config.address = Context::get_config()["server_ip"]; 
 
-  alert::Client::add_clients(argv[2]); // path to xml file
 
   server.resource["^/machine/[a-zA-Z0-9]*$"]["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
     auto content = request->content.string();
@@ -60,11 +56,9 @@ int main(int argc, char** argv) {
   };
 
   server.on_error = [](shared_ptr<HttpServer::Request> /*request*/, const SimpleWeb::error_code & /*ec*/) {
-    // Handle errors here
   };
 
   thread server_thread([&server]() {
-    // Start server
     server.start();
   });
 
