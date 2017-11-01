@@ -10,8 +10,8 @@ LDLIBS=-L/usr/local/lib -lboost_system -pthread -lpthread  -lprotobuf -lodb -lod
 CSP=../common/src
 SP=./src
 
-SRCS=$(CSP)/machine_info-odb.cpp $(CSP)/machine.pb.cc $(SP)/client.cpp $(SP)/server.cpp $(SP)/persistence.cpp $(SP)/server_config.cpp $(CSP)/context.cpp
-OBJS=$(SP)/server.o $(SP)/persistence.o $(SP)/client.o $(CSP)/machine_info-odb.o $(CSP)/machine.pb.o $(SP)/server_config.o $(CSP)/context.o
+SRCS=$(CSP)/machine_info-odb.cpp $(CSP)/machine.pb.cc $(SP)/client.cpp $(SP)/server.cpp $(SP)/persistence.cpp $(SP)/server_config.cpp $(CSP)/context.cpp $(CSP)/logger.cpp
+OBJS=$(SP)/server.o $(SP)/persistence.o $(SP)/client.o $(CSP)/machine_info-odb.o $(CSP)/machine.pb.o $(SP)/server_config.o $(CSP)/context.o $(CSP)/logger.o
 
 all: server
 

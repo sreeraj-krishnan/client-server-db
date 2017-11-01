@@ -9,8 +9,8 @@ LDLIBS=-L/usr/local/lib -lboost_system -pthread -lpthread -lprotobuf
 CSP=../common/src
 SP=./src
 
-SRCS=$(CSP)/machine.pb.cc $(SP)/client.cpp $(SP)/server.cpp $(SP)/client_info.cpp $(CSP)/context.cpp
-OBJS=$(SP)/server.o $(SP)/client_info.o $(SP)/client.o $(CSP)/machine.pb.o  $(CSP)/context.o
+SRCS=$(CSP)/machine.pb.cc $(SP)/client.cpp $(SP)/server.cpp $(SP)/client_info.cpp $(CSP)/context.cpp $(CSP)/logger.cpp
+OBJS=$(SP)/server.o $(SP)/client_info.o $(SP)/client.o $(CSP)/machine.pb.o  $(CSP)/context.o $(CSP)/logger.o
 
 all: client
 

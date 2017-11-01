@@ -7,6 +7,9 @@
 	"mail_passwd" : "miner1",
 	"db_username" : "postgres",
 	"db_passwd"  : "postgres",
-	"db_name" : "mydb"	
+	"db_name" : "mydb",
+	"debug.logfile" : "logs/server.log",
+	"debug.level" : "trace",	
+	"logger_name" : "server_logging"	
 	
 }

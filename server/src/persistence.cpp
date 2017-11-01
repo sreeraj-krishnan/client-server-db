@@ -1,5 +1,6 @@
 #include "persistence.h"
 #include "context.h"
+#include "logger.h"
 
 #include "machine.pb.h"
 #include "machine_info.hxx"
@@ -33,7 +34,7 @@ MachineInfoPtr Persistence::get_orm_object( const string& client_key, const std:
     }
     else
     {
-	/// log error and throw
+	    Logger::log()->critical("Failed to deerialize and parse string from client : {}", client_key);
     }
     return MachineInfoPtr(0); 
 }
@@ -53,7 +54,6 @@ void Persistence::write_client_info_db( const MachineInfoPtr& client_info )
 	}
 	catch(const odb::exception& e)
 	{
-		std::cerr<< e.what();
-		/// throw 
+	    Logger::log()->critical("Failed to persist data tp database : {}", e.what());
 	}	
 }

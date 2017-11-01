@@ -12,6 +12,7 @@
 #include <google/protobuf/util/time_util.h>
 
 #include "machine.pb.h"
+#include "logger.h"
 
 using namespace client;
 using namespace std;
@@ -20,7 +21,6 @@ using namespace std;
 ClientInfo::ClientInfo(): machine(0) 
 {
 	machine = new machine::Machine();
-	//assert( machine == 0 );
 }
 
 ClientInfo::~ClientInfo()
@@ -94,6 +94,7 @@ long ClientInfo::get_cpu_count( )
     	if ( !file.is_open() )
 	{	
 		//log error
+		Logger::log()->critical("failed to open system file /proc/stat");
 		return 0;
 	}
 	
@@ -152,6 +153,7 @@ void ClientInfo::get_cpu_idle_values()
    }
    else
    {	
+	Logger::log()->critical("failed to open system file /proc/stat");
 	//log error
    }
    long cpu_count = get_cpu_count();
@@ -252,7 +254,7 @@ void ClientInfo::get_process_info()
    }
    else
    {	
-	//log error
+	Logger::log()->critical("failed to open system file /proc/stat");
    }
    
    machine::Machine::Process* process =  new  machine::Machine::Process() ;

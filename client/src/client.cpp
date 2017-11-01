@@ -3,6 +3,7 @@
 #include <string>
 #include "client_info.h"
 #include "context.h"
+#include "logger.h"
 
 using namespace std;
 
@@ -21,20 +22,18 @@ int main ( int argc , char** argv )
 		{
 			if ( !server.send_data( binary_data ) )
 			{
-				//cout << "successfully send data\n";
-				cerr << "failed to send details to server\n";
+				Logger::log()->critical(  "failed to send details to server {}" );
 			}
 			else
 			{
-				cout << "successfully send data\n";
+				Logger::log()->info(  "Send details to server" );
 			}
 		}
 		else
 		{	
-			cerr << "failed to serialize data\n";
-			//log throw 
+			Logger::log()->critical(  "failed to serialize data" );
 		}
-		sleep( stoi(Context::get_config()["send_stat_frequency"]));
+		sleep( stoi(Context::get_config()["send_stat_frequency"]) );
 	}
 
 	return 0;

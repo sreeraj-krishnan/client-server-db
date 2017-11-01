@@ -2,6 +2,7 @@
 #include "smtpclient.h"
 #include "machine_info.hxx"
 #include "context.h"
+#include "logger.h"
 
 #include <istream>
 #include <iostream>
@@ -42,19 +43,21 @@ void Client::alert_for_memory( const TriggerEvent& _event, const MachineInfoPtr&
 	{
 		body = string( "Memory consumption went under the trigger value of ") + trigger_value;				
 	}
-	else if( eve.second == Condition::under && mem_percentage > trigger )
+	else if( eve.second == Condition::over && mem_percentage > trigger )
 	{
 		body = string( "Memory consumption went over the trigger value of ") + trigger_value;
 	}
 	
 	if( ! body.empty() )	
 	{
+		Logger::log()->info(" trigger : {}" , body );
+
 		Config& config = Context::get_config();
 		SMTPClient mailc( config["mail_server"], stol(config["mail_server_port"]),config["mail_username"],config["mail_passwd"]);
 		bool ret = mailc.Send(config["mail_username"],m_email, subject , body );
 		if ( ret )
 		{
-			cout << "failed to memory send notification " << "\n";
+			Logger::log()->critical("failed to send email to client {0} for trigger ", m_email);
 		}	
 	}
 }
@@ -79,19 +82,21 @@ void Client::alert_for_cpu( const TriggerEvent& _event, const MachineInfoPtr& ma
 	{
 		body = string( "CPU usage under the trigger value of ") + trigger_value;				
 	}
-	else if( eve.second == Condition::under && c->use_time > trigger )
+	else if( eve.second == Condition::over && c->use_time > trigger )
 	{
 		body = string( "CPU usage went over the trigger value of ") + trigger_value;
 	}
 	
 	if( ! body.empty() )	
 	{
+		Logger::log()->info(" trigger : {}" , body );
+		
 		Config& config = Context::get_config();
 		SMTPClient mailc( config["mail_server"], stol( config["mail_server_port"]),config["mail_username"],config["mail_passwd"]);
 		bool ret = mailc.Send(config["mail_username"],m_email, subject , body );
 		if ( ret )
 		{
-			cout << "failed to send cpu notification " << "\n";
+			Logger::log()->critical("failed to send email to client {0} for trigger ", m_email);
 		}	
 	}
 	
@@ -117,19 +122,21 @@ void Client::alert_for_process( const TriggerEvent& _event, const MachineInfoPtr
 	{
 		body = string( "Process running limit under the trigger value of ") + trigger_value;				
 	}
-	else if( eve.second == Condition::under && p->running > trigger )
+	else if( eve.second == Condition::over && p->running > trigger )
 	{
 		body = string( "Process running limit went over the trigger value of ") + trigger_value;
 	}
 	
 	if( ! body.empty() )	
 	{
+		Logger::log()->info(" trigger : {}" , body );
+		
 		Config& config = Context::get_config();
 		SMTPClient mailc( config["mail_server"], stol(config["mail_server_port"]) ,config["mail_username"],config["mail_passwd"]);
 		bool ret = mailc.Send(config["mail_username"],m_email, subject , body );
 		if ( ret )
 		{
-			cout << "failed to send process notification " << "\n";
+			Logger::log()->critical("failed to send email to client {0} for trigger ", m_email);
 		}	
 	}
 	
@@ -162,6 +169,7 @@ Client * const Client::get_client( const string& key )
 	{
 		return client_map[key];
 	}
+	Logger::log()->critical(" unable to find client : {}" , key );
 	return nullptr;
 }
 bool Client::authenticate_client( const string& key )
@@ -170,6 +178,7 @@ bool Client::authenticate_client( const string& key )
 	{
 		return true;
 	}
+	Logger::log()->critical(" unable to authenticate_client client : {}" , key );
 	return false;
 }
 
@@ -298,7 +307,7 @@ void Client::add_clients(const std::string xml_file )
 
 			if( client_key == "" || client_email == "" )
 			{
-				// throw , log
+				Logger::log()->critical(" Invalid xml client list file, failed to find key or email");
 				continue;
 			}
 			Client *client = new Client( client_key , client_email );
@@ -318,7 +327,7 @@ void Client::add_clients(const std::string xml_file )
 				}
 				if( type == string() )
 				{
-					// log throw
+					Logger::log()->critical(" Invalid xml client list file, failed to find alert type");
 					continue;
 				}
 				
@@ -332,13 +341,12 @@ void Client::add_clients(const std::string xml_file )
 
 		}		
 	   }catch(std::exception& e) {
-		cout << e.what() << "\n";
+		Logger::log()->critical(" Exception in parsing : {}", e.what());
 	   }
 	   file.close();	
 	}
 	else
 	{
-		//log error
+		Logger::log()->critical(" Failed to open xml file : {}", xml_file );
 	}
-	
 }
