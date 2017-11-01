@@ -5,6 +5,7 @@
 
 #include "persistence.h"
 #include "client.h"
+#include "server_config.h"
 
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/json_parser.hpp>
@@ -23,22 +24,23 @@ using HttpClient = SimpleWeb::Client<SimpleWeb::HTTP>;
 
 int main(int argc, char** argv) {
   
-  if( argc < 2 )
+  if( argc < 3 )
   {
-	cout << "Usage : ./server <path to xml file>\n";
+	cout << "Usage : ./server <server-config> <path to client-config xml file>\n";
 	exit(1);
   }
 
-  HttpServer server;
-  server.config.port = 9090;
-  server.config.address = "192.168.1.3";
+  ServerConfig sconfig(argv[1]);
 
-  alert::Client::add_clients(argv[1]); // path to xml file
+  HttpServer server;
+  server.config.port = stoi( sconfig.get_port());
+  server.config.address = sconfig.get_ip();
+
+  alert::Client::add_clients(argv[2]); // path to xml file
 
   server.resource["^/machine/[a-zA-Z0-9]*$"]["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
     auto content = request->content.string();
 	string path = request->path;
-	cout << "client id : " << path.substr( path.rfind("/")+1, path.length() - path.rfind("/")) << "\n";
 	string client_key ( path.substr( path.rfind("/")+1, path.length() - path.rfind("/")) );
 
       {

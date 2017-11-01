@@ -33,8 +33,6 @@ void Client::alert_for_memory( const TriggerEvent& _event, const MachineInfoPtr&
 
 	float mem_percentage = (100.0 * ( m->mem_total - m->mem_free ) / m->mem_total );
 	
-	cout << "mem : " << mem_percentage << "\n";
-
 	if( eve.second == Condition::equal && (int)mem_percentage == trigger )
 	{
 		body = string( "Memory consumption reached the trigger value of ") + trigger_value;				

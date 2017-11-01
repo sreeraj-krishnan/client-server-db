@@ -27,9 +27,7 @@ MachineInfoPtr Persistence::get_orm_object( const string& client_key, const std:
 
 	using namespace google::protobuf::util;
 	unsigned long int timestamp = TimeUtil::TimestampToSeconds( info->machine().last_updated() );
-	cout << "timestamp : " << timestamp << "\n";
 	return MachineInfoPtr ( new machineinfo( client_key, mem , cpu , process , sys , timestamp) ) ;
-        	
 	
     }
     else
@@ -43,7 +41,6 @@ void Persistence::write_client_info_db( const MachineInfoPtr& client_info )
 {
 	try 
 	{
-		// TODO read user name / passwd / db from configuration
     		std::unique_ptr<database> db (new odb::pgsql::database ("postgres","postgres","mydb"));
    		{
 			transaction t (db->begin ());

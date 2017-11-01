@@ -10,8 +10,8 @@ LDLIBS=-L/usr/local/lib -lboost_system -pthread -lpthread  -lprotobuf -lodb -lod
 COMMON_SRC_PATH=../common/src
 SRC_PATH=./src
 
-SRCS=$(COMMON_SRC_PATH)/machine_info-odb.cpp $(COMMON_SRC_PATH)/machine.pb.cc $(SRC_PATH)/client.cpp $(SRC_PATH)/server.cpp $(SRC_PATH)/persistence.cpp
-OBJS=$(SRC_PATH)/server.o $(SRC_PATH)/persistence.o $(SRC_PATH)/client.o $(COMMON_SRC_PATH)/machine_info-odb.o $(COMMON_SRC_PATH)/machine.pb.o 
+SRCS=$(COMMON_SRC_PATH)/machine_info-odb.cpp $(COMMON_SRC_PATH)/machine.pb.cc $(SRC_PATH)/client.cpp $(SRC_PATH)/server.cpp $(SRC_PATH)/persistence.cpp $(SRC_PATH)/server_config.cpp
+OBJS=$(SRC_PATH)/server.o $(SRC_PATH)/persistence.o $(SRC_PATH)/client.o $(COMMON_SRC_PATH)/machine_info-odb.o $(COMMON_SRC_PATH)/machine.pb.o $(SRC_PATH)/server_config.o
 
 all: server
 

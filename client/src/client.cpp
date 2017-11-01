@@ -22,13 +22,15 @@ int main ( int argc , char** argv )
 	
 		if(  info->SerializeToString( &binary_data ) )
 		{
-			if ( server.send_data( binary_data ) )
+			if ( !server.send_data( binary_data ) )
 			{
-				cout << "successfully send data\n";
+				//cout << "successfully send data\n";
+				cerr << "failed to send details to server\n";
 			}
 		}
 		else
 		{	
+			cerr << "failed to serialize data\n";
 			//log throw 
 		}
 		sleep(5);
