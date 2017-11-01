@@ -59,7 +59,16 @@ int main(int argc, char** argv) {
 
   };
 
-  server.on_error = [](shared_ptr<HttpServer::Request> request, const SimpleWeb::error_code & ec) {
+  server.default_resource["GET"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+	response->write( SimpleWeb::StatusCode::server_error_not_implemented );  
+  
+  };
+  server.default_resource["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+	response->write( SimpleWeb::StatusCode::server_error_not_implemented );  
+  };
+  
+
+   server.on_error = [](shared_ptr<HttpServer::Request> request, const SimpleWeb::error_code & ec) {
 	Logger::log()->critical("Error request : {0}", request->content.string());
   };
 
