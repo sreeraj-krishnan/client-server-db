@@ -9,7 +9,7 @@ class Server
 {
    public:
 	
-	Server(string config_json);
+	Server();
 
 	bool initialize_server_config(std::string json_config);
 

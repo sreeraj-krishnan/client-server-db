@@ -2,6 +2,7 @@
 #include "client_http.hpp"
 #include "server_http.hpp"
 #include "utility.hpp"
+#include "context.h"
 
 #include <string>
 #include <istream>
@@ -15,13 +16,21 @@ using namespace std;
 
 using boost::property_tree::ptree;
 
-Server::Server( string config_json )
+Server::Server( )
 {
+   #if 0
 	if ( ! initialize_server_config( config_json ) )
 	{	
 		// throw
 		// log
 	}
+   #endif
+	Config& config = Context::get_config();
+	m_ip = config["host"];
+	m_port = config["port"];
+	m_url = config["url"];
+	string client_id = config["client_id"];
+	m_url.replace( m_url.find("@") , m_url.length() - m_url.find("@"), client_id);
 }
 
 bool Server::initialize_server_config(string json_config)

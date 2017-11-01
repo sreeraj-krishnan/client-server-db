@@ -2,18 +2,15 @@
 #include <iostream>
 #include <string>
 #include "client_info.h"
+#include "context.h"
 
 using namespace std;
 
 int main ( int argc , char** argv )
 {
-	if ( argc < 2 )
-	{
-		cout << "usage : ./client <server-config-file> \n";
-		exit(1);
-	}
-	Server server( argv[1] );
-	
+	Context context("config/context.json");
+	Server server;
+		
 	while( 1 )
 	{
 		client::ClientInfo c;
@@ -27,13 +24,17 @@ int main ( int argc , char** argv )
 				//cout << "successfully send data\n";
 				cerr << "failed to send details to server\n";
 			}
+			else
+			{
+				cout << "successfully send data\n";
+			}
 		}
 		else
 		{	
 			cerr << "failed to serialize data\n";
 			//log throw 
 		}
-		sleep(5);
+		sleep( stoi(Context::get_config()["send_stat_frequency"]));
 	}
 
 	return 0;

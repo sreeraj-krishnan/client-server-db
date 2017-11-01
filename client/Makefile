@@ -6,11 +6,11 @@ CPPFLAGS=
 LDFLAGS=
 LDLIBS=-L/usr/local/lib -lboost_system -pthread -lpthread -lprotobuf
 
-COMMON_SRC_PATH=../common/src
-SRC_PATH=./src
+CSP=../common/src
+SP=./src
 
-SRCS=$(COMMON_SRC_PATH)/machine.pb.cc $(SRC_PATH)/client.cpp $(SRC_PATH)/server.cpp $(SRC_PATH)/client_info.cpp
-OBJS=$(SRC_PATH)/server.o $(SRC_PATH)/client_info.o $(SRC_PATH)/client.o $(COMMON_SRC_PATH)/machine.pb.o 
+SRCS=$(CSP)/machine.pb.cc $(SP)/client.cpp $(SP)/server.cpp $(SP)/client_info.cpp $(CSP)/context.cpp
+OBJS=$(SP)/server.o $(SP)/client_info.o $(SP)/client.o $(CSP)/machine.pb.o  $(CSP)/context.o
 
 all: client
 
