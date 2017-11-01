@@ -1,0 +1,55 @@
+// See README.txt for information and build instructions.
+//
+// Note: START and END tags are used in comments to define sections used in
+// tutorials.  They are not part of the syntax for Protocol Buffers.
+//
+// To get an in-depth walkthrough of this file and the related examples, see:
+// https://developers.google.com/protocol-buffers/docs/tutorials
+
+// [START declaration]
+syntax = "proto3";
+package machine;
+
+import "google/protobuf/timestamp.proto";
+
+
+// [START messages]
+
+message Machine {
+  message Memory {
+    int32 mem_total = 1;
+    int32 mem_available = 2;  
+    int32 mem_free = 3;
+
+  }
+	
+  Memory memory = 6;
+
+  message CPU {
+    float idle_time = 1;
+    float use_time = 2;
+  }
+
+  CPU cpu = 7;
+
+  message Process {
+	int32 total = 1;
+	int32 running = 2;
+	int32 blocked = 3;	
+  }
+
+  Process process = 8;
+ 
+  message SystemInfo {
+	string system_ip = 1;
+	string system_name = 2;
+  }
+
+  SystemInfo systeminfo = 9;
+
+  google.protobuf.Timestamp last_updated = 5;
+}
+
+message MachineInfo {
+  Machine machine = 1;
+}
