@@ -1,16 +1,1 @@
 
-[2017-11-02 04:38:47.282] [server_logging] [critical]  unable to authenticate_client client : q
-[2017-11-02 04:38:47.283] [server_logging] [critical] Unknown client request recieved from client q
-[2017-11-02 04:38:47.283] [server_logging] [critical] Error request : 
-[2017-11-02 04:38:50.285] [server_logging] [critical]  unable to authenticate_client client : q
-[2017-11-02 04:38:50.285] [server_logging] [critical] Unknown client request recieved from client q
-[2017-11-02 04:38:50.285] [server_logging] [critical] Error request : 
-[2017-11-02 04:38:53.290] [server_logging] [critical]  unable to authenticate_client client : q
-[2017-11-02 04:38:53.290] [server_logging] [critical] Unknown client request recieved from client q
-[2017-11-02 04:38:53.291] [server_logging] [critical] Error request : 
-[2017-11-02 04:38:56.292] [server_logging] [critical]  unable to authenticate_client client : q
-[2017-11-02 04:38:56.293] [server_logging] [critical] Unknown client request recieved from client q
-[2017-11-02 04:38:56.293] [server_logging] [critical] Error request : 
-[2017-11-02 04:38:59.295] [server_logging] [critical]  unable to authenticate_client client : q
-[2017-11-02 04:38:59.295] [server_logging] [critical] Unknown client request recieved from client q
-[2017-11-02 04:38:59.295] [server_logging] [critical] Error request : 
